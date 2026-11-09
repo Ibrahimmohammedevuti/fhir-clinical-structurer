@@ -1,4 +1,4 @@
-import { ExtractionResult } from '../types/clinical';
+import type { ExtractionResult } from '../types/clinical.ts';
 
 export type HeatmapCategory = 'diagnosis' | 'medication' | 'lab-vital' | 'cdi-audit';
 

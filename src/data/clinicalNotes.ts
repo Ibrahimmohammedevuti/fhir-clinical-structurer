@@ -1,4 +1,4 @@
-import { ClinicalNotePreset } from '../types/clinical';
+import type { ClinicalNotePreset } from '../types/clinical.ts';
 
 export const CLINICAL_NOTE_PRESETS: ClinicalNotePreset[] = [
   {

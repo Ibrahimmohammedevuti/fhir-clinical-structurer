@@ -1,4 +1,4 @@
-import {
+import type {
   ClinicalCodingAuditFlag,
   ClinicalDiagnosis,
   ClinicalLabVital,
@@ -7,8 +7,8 @@ import {
   FhirBundle,
   FhirBundleEntry,
   FhirValidationSummary
-} from '../types/clinical';
-import { CLINICAL_NOTE_PRESETS } from '../data/clinicalNotes';
+} from '../types/clinical.ts';
+import { CLINICAL_NOTE_PRESETS } from '../data/clinicalNotes.ts';
 
 export const FHIR_SYSTEM_URIS = {
   ICD10CM: 'http://hl7.org/fhir/sid/icd-10-cm',

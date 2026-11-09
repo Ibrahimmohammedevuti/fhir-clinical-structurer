@@ -5,9 +5,14 @@ import {
   validateFhirBundle,
   calculateExtractionMetrics,
   extractClinicalNoteDeterministic,
-  FHIR_SYSTEM_URIS
-} from './fhirBuilder';
-import { CLINICAL_NOTE_PRESETS } from '../data/clinicalNotes';
+  FHIR_SYSTEM_URIS,
+  buildPatientDemographicsChartData
+} from './fhirBuilder.ts';
+import { CLINICAL_NOTE_PRESETS } from '../data/clinicalNotes.ts';
+import {
+  tokenizeNoteWithConfidenceHeatmap,
+  getHeatmapOpacityClasses
+} from './heatmapTokenizer.ts';
 
 test('all 4 clinical note presets build valid HL7 FHIR R4 Bundles with ICD-10-CM, SNOMED-CT, RxNorm, and LOINC codes', () => {
   assert.equal(CLINICAL_NOTE_PRESETS.length, 4);
@@ -66,11 +71,6 @@ test('extractClinicalNoteDeterministic extracts ontology codes from custom clini
   assert.ok(json.includes(FHIR_SYSTEM_URIS.RXNORM));
 });
 
-import {
-  tokenizeNoteWithConfidenceHeatmap,
-  getHeatmapOpacityClasses
-} from './heatmapTokenizer';
-
 test('tokenizeNoteWithConfidenceHeatmap losslessly segments clinical notes and maps extraction certainty to opacity bands', () => {
   for (const preset of CLINICAL_NOTE_PRESETS) {
     const tokens = tokenizeNoteWithConfidenceHeatmap(
@@ -102,8 +102,6 @@ test('tokenizeNoteWithConfidenceHeatmap losslessly segments clinical notes and m
     assert.notEqual(ultraStyle.bgClass, lowStyle.bgClass);
   }
 });
-
-import { buildPatientDemographicsChartData } from './fhirBuilder';
 
 test('buildPatientDemographicsChartData classifies extracted patient age and sex into cohort distribution', () => {
   const edPatient = CLINICAL_NOTE_PRESETS[0].precomputedResult.patient; // 68yo male
