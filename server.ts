@@ -204,7 +204,10 @@ app.post('/api/extract', async (req, res) => {
     return;
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey =
+    typeof process !== 'undefined' && process.env
+      ? process.env.GEMINI_API_KEY
+      : undefined;
   const hasValidEnvKey =
     Boolean(apiKey) &&
     apiKey !== 'MY_GEMINI_API_KEY' &&
@@ -213,7 +216,7 @@ app.post('/api/extract', async (req, res) => {
   if (preferLiveGemini && hasValidEnvKey) {
     try {
       const ai = new GoogleGenAI({
-        apiKey: process.env.GEMINI_API_KEY,
+        apiKey,
         httpOptions: {
           headers: {
             'User-Agent': 'aistudio-build'

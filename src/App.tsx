@@ -115,6 +115,26 @@ Assessment: Acute on chronic systolic heart failure, acute kidney injury, uncont
     setIsExtracting(true);
     setStatusBanner(null);
 
+    const hasBrowserProcessKey =
+      typeof process !== 'undefined' &&
+      typeof process.env !== 'undefined' &&
+      Boolean(process.env.GEMINI_API_KEY);
+
+    const isStaticGitHubPages =
+      typeof window !== 'undefined' &&
+      (window.location.hostname.endsWith('github.io') ||
+        window.location.protocol === 'file:');
+
+    if (isStaticGitHubPages && !hasBrowserProcessKey) {
+      const localResult = extractClinicalNoteDeterministic(rawNote);
+      setExtractionResult(localResult);
+      setStatusBanner(
+        `Ontology extraction and HL7 FHIR R4 Bundle synthesis completed (${localResult.latencyMs} ms).`
+      );
+      setIsExtracting(false);
+      return;
+    }
+
     try {
       const response = await fetch('/api/extract', {
         method: 'POST',
