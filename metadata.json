@@ -1,0 +1,6 @@
+{
+  "name": "FHIR-Structurer: Few-Shot Clinical NLP & Ontology Extraction Engine",
+  "description": "Clinical NLP and HL7 FHIR R4 ontology extraction engine translating unstructured clinical narratives into ICD-10-CM, SNOMED-CT, RxNorm, LOINC, and validated FHIR R4 bundles with automated CDI coding audits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
